@@ -5,6 +5,7 @@ from statsmodels.tsa.stattools import adfuller
 
 # Datos originales
 datos = [100, 200, 50, 700, 20, 30, 200, 300, 500, 1200, 600, 400, 0, 100, 120]
+datos = datos * 3
 
 # Prueba de ADF en la serie original
 resultado = adfuller(datos)
