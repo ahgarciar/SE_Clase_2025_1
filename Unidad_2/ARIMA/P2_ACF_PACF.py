@@ -4,6 +4,10 @@ import matplotlib.pyplot as plt
 
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 
+
+
+
+
 datos = [100, 200, 50, 700, 20, 30, 200, 300, 500, 1200, 600, 400, 0, 100, 120]
 datos = datos * 3
 
