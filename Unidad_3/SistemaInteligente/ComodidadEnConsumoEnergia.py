@@ -17,7 +17,6 @@ class energia: #Que tan comodos nos encontramos con base en el consumo de energi
 
         energia = []
 
-        temp = []
         for key, valor_a_analizar in vectorPorAplicar.items():
             rango_preferencias = self.preferencias_energia[key]
             vmin = rango_preferencias[0]
@@ -27,15 +26,23 @@ class energia: #Que tan comodos nos encontramos con base en el consumo de energi
             costo = rango_preferencias[4] # costo por cambio de unidad
             va = vDatosActuales[key]
             #######
+            temp = -1
             if rango_preferencias[2] == 0: #min
-                Eo = self.calcula_satisfaccion_energia_min(costo, valor_a_analizar, va)
-                Emin = self.calcula_satisfaccion_energia_min(costo,valor_a_analizar, vmax)
-                Emax = self.calcula_satisfaccion_energia_min(costo,valor_a_analizar, vmin)
+                if va >= vmin: #
+                    Eo = self.calcula_satisfaccion_energia_min(costo, valor_a_analizar, va)
+                    Emin = self.calcula_satisfaccion_energia_min(costo,valor_a_analizar, vmax)
+                    Emax = self.calcula_satisfaccion_energia_min(costo,valor_a_analizar, vmin)
+                else:
+                    temp = 1
             else: #max
-                Eo = self.calcula_satisfaccion_energia_max(costo, valor_a_analizar, va)
-                Emin = self.calcula_satisfaccion_energia_max(costo, valor_a_analizar, vmin)
-                Emax = self.calcula_satisfaccion_energia_max(costo, valor_a_analizar, vmax)
-            temp =1-(Eo-Emin)/(Emax-Emin)
+                if va <= vmax:
+                    Eo = self.calcula_satisfaccion_energia_max(costo, valor_a_analizar, va)
+                    Emin = self.calcula_satisfaccion_energia_max(costo, valor_a_analizar, vmin)
+                    Emax = self.calcula_satisfaccion_energia_max(costo, valor_a_analizar, vmax)
+                else:
+                    temp = 1
+            if temp != 1:
+                temp = 1-(Emax-Eo)/(Emax-Emin)
             temp = temp*wservicio
             energia.append(temp)
 
