@@ -1,6 +1,7 @@
-import SatisfaccionUsuario as s_usuario
-import ComodidadEnConsumoEnergia as s_energia
+from Unidad_3.Problema import SatisfaccionUsuario as s_usuario
+from Unidad_3.Problema import ComodidadEnConsumoEnergia as s_energia
 
+#fo...
 def calculaGanancia(alfa, beta, prefServicios, valoresActuales, valoresOptimizados):
     ganancia_solucion = 0
     ##########################################################################################

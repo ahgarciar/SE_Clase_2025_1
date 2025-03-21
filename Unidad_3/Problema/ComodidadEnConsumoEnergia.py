@@ -1,6 +1,3 @@
-from Unidad_3.SistemaInteligente.SatisfaccionUsuario import satisfaccion
-
-
 class energia: #Que tan comodos nos encontramos con base en el consumo de energia
     #en la configuracion dada
 
@@ -42,7 +39,7 @@ class energia: #Que tan comodos nos encontramos con base en el consumo de energi
                 else:
                     temp = 1
             if temp != 1:
-                temp = 1-(Emax-Eo)/(Emax-Emin)
+                temp = 1-(Eo-Emin)/(Emax-Emin)
             temp = temp*wservicio
             energia.append(temp)
 

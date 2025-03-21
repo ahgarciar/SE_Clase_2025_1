@@ -14,7 +14,7 @@ actuadores = {
 # El ajuste dependera de cada actuador, por ejemplo subir un poco la intensidad por vez
 # o prender el dispositivo (ej. AC, calefector), etc.
 def ajustar_actuador(actuador, diferencia): #codigo de muestra, debe asociarse a cada actuador.!!
-    if diferencia == 0:
+    if diferencia == 0:  #umbral
         print("No se hace nada")
     elif diferencia < 0:
         print("Se ajusta en sentido A. Por ejemplo, se enciende el AC")
