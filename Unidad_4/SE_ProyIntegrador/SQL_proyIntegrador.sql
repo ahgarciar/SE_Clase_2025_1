@@ -1,56 +1,66 @@
 --PASO 1
-CREATE DATABASE [BD_PROY_INTEGRADO_SE]
+CREATE DATABASE [BD_UNIDAD_4_SE_2025_1]
 
+USE BD_UNIDAD_4_SE_2025_1
+GO
+
+--DROP TABLE devices_info
 --PASO 2
-CREATE TABLE [dbo].[sensor_info](
-    [id_sensor] [numeric](18, 0) IDENTITY(1,1) NOT NULL,
+CREATE TABLE [dbo].[devices_info](
+    [id_device] [numeric](18, 0) IDENTITY(1,1) NOT NULL,
+    [id_type] [numeric](18, 0) NOT NULL, --SENSOR O ACTUADOR
+    [id_signal_type] [numeric](18, 0) NOT NULL, -- DIGITAL O ANALOGICO
     [name] [nvarchar](100) NOT NULL,     
+    [vendor] [nvarchar](100) NOT NULL
 ) ON [PRIMARY]
 GO
-ALTER TABLE [dbo].[sensor_info] ADD PRIMARY KEY CLUSTERED 
+ALTER TABLE [dbo].[devices_info] ADD PRIMARY KEY CLUSTERED 
 (
-    [id_sensor] ASC
+    [id_device] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 
+BEGIN TRAN
+INSERT INTO devices_info (NAME, VENDOR, id_type, id_signal_type) VALUES('SENSOR DE DISTANCIA','SE_CLASE', 1, 1)
+INSERT INTO devices_info (NAME, VENDOR, id_type, id_signal_type) VALUES('SENSOR DE PROXIMIDAD','SE_CLASE', 1, 1)
+SELECT * FROM devices_info
+ROLLBACK TRAN
 
-INSERT INTO sensor_info (NAME) VALUES('SENSOR DE DISTANCIA')
-INSERT INTO sensor_info (NAME) VALUES('SENSOR DE VELOCIDAD')
-
-SELECT * FROM sensor_info
+INSERT INTO devices_info (NAME, VENDOR, id_type, id_signal_type) VALUES('SENSOR DE ILUMINACION','SE_CLASE', 1, 1)
+SELECT * FROM devices_info
 
 
 --PASO 3
-
-CREATE TABLE [dbo].[sensor_records](
+CREATE TABLE [dbo].[devices_records](
     [id_record] [numeric](18, 0) IDENTITY(1,1) NOT NULL,
-    [id_sensor] [numeric](18, 0) NOT NULL,
+    [id_device] [numeric](18, 0) NOT NULL,
     [current_value] [numeric](18, 0) NOT NULL,
     [date_record] [datetime] NOT NULL
 ) ON [PRIMARY]
 GO
-ALTER TABLE [dbo].[sensor_records] ADD PRIMARY KEY CLUSTERED 
+ALTER TABLE [dbo].[devices_records] ADD PRIMARY KEY CLUSTERED 
 (
     [id_record] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 
---PASO 4
-CREATE PROCEDURE [dbo].[SP_Insert_SensorRecords] 
+GO
+--PASO 4 
+CREATE PROCEDURE [dbo].[SP_Insert_DevicesRecords] 
     -- Add the parameters for the stored procedure here
-    @id_sensor as numeric(18,0), 
-    @current_value as numeric(18,0)
+    @id_device as numeric(18,0), 
+    @current_value as numeric(18,0)  -- va
 AS
 BEGIN
     -- SET NOCOUNT ON added to prevent extra result sets from
     -- interfering with SELECT statements.
     SET NOCOUNT ON;
 
-    INSERT INTO [dbo].[sensor_records]
-           ([id_sensor]
+    INSERT INTO [dbo].[devices_records]
+           ([id_device]
             ,[date_record]
             ,[current_value]
            )
      VALUES
-           (@id_sensor
+           (@id_device
             ,GETDATE()
            ,@current_value
            )
@@ -59,15 +69,20 @@ END
 
 
 ---PASO 5
-exec SP_Insert_SensorRecords 1, 120
-exec SP_Insert_SensorRecords 1, 240
-exec SP_Insert_SensorRecords 1, 170
-exec SP_Insert_SensorRecords 1, 390
-exec SP_Insert_SensorRecords 2, 80
-exec SP_Insert_SensorRecords 2, 140
-exec SP_Insert_SensorRecords 2, 890
+exec SP_Insert_DevicesRecords 1, 120
+exec SP_Insert_DevicesRecords 1, 240
+exec SP_Insert_DevicesRecords 1, 170
+exec SP_Insert_DevicesRecords 1, 390
+exec SP_Insert_DevicesRecords 2, 80
+exec SP_Insert_DevicesRecords 2, 140
+exec SP_Insert_DevicesRecords 2, 890
 
-select * from sensor_records
+select * from devices_records
+
+
+UPDATE devices_records SET id_device = 4 WHERE id_device = 1
+
+GO
 
 CREATE PROCEDURE [dbo].[SP_SelectALL_records]
     -- Add the parameters for the stored procedure here 
@@ -77,9 +92,10 @@ BEGIN
     -- interfering with SELECT statements.
     SET NOCOUNT ON;
 
-    SELECT SI.id_sensor, SI.name "NAME", SR.current_value "CURRENT_VALUE", SR.date_record "DATE_RECORD"
-    FROM sensor_records SR
-    INNER JOIN sensor_info SI ON SR.id_sensor = SI.id_sensor        
+    SELECT DI.id_device, DI.name "NAME", DR.current_value "CURRENT_VALUE", 
+    DR.date_record "DATE_RECORD"
+    FROM devices_records DR
+    INNER JOIN devices_info DI ON DR.id_device = DI.id_device
            
 END
 
