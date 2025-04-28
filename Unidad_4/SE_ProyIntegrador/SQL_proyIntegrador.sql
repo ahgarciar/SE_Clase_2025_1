@@ -25,12 +25,13 @@ INSERT INTO devices_info (NAME, VENDOR, id_type, id_signal_type) VALUES('SENSOR 
 SELECT * FROM devices_info
 ROLLBACK TRAN
 
-INSERT INTO devices_info (NAME, VENDOR, id_type, id_signal_type) VALUES('SENSOR DE ILUMINACION','SE_CLASE', 1, 1)
+INSERT INTO devices_info (NAME, VENDOR, id_type, id_signal_type) VALUES('SENSOR DE PRESENCIA','SE_CLASE', 1, 1)
 SELECT * FROM devices_info
 
+GO
 
 --PASO 3
-CREATE TABLE [dbo].[devices_records](
+CREATE TABLE [dbo].[devices_records](  -- HISTORICO ---> DW  ---> EDA (ANALISIS EXPLORATORIO DE DATOS)
     [id_record] [numeric](18, 0) IDENTITY(1,1) NOT NULL,
     [id_device] [numeric](18, 0) NOT NULL,
     [current_value] [numeric](18, 0) NOT NULL,
@@ -47,7 +48,7 @@ GO
 CREATE PROCEDURE [dbo].[SP_Insert_DevicesRecords] 
     -- Add the parameters for the stored procedure here
     @id_device as numeric(18,0), 
-    @current_value as numeric(18,0)  -- va
+    @current_value as numeric(18,0)  -- va (VALOR ACTUAL)
 AS
 BEGIN
     -- SET NOCOUNT ON added to prevent extra result sets from
@@ -78,9 +79,9 @@ exec SP_Insert_DevicesRecords 2, 140
 exec SP_Insert_DevicesRecords 2, 890
 
 select * from devices_records
+SELECT * FROM devices_info
 
-
-UPDATE devices_records SET id_device = 4 WHERE id_device = 1
+UPDATE devices_records SET id_device = 5 WHERE id_device = 2
 
 GO
 
@@ -99,27 +100,36 @@ BEGIN
            
 END
 
+EXEC SP_SelectALL_records
+
+GO
 
 CREATE PROCEDURE [dbo].[SP_SelecLastRecordByID]
     -- Add the parameters for the stored procedure here 
-    @id_sensor as numeric(18,0)
+    @id_device as numeric(18,0)
 AS
 BEGIN
     -- SET NOCOUNT ON added to prevent extra result sets from
     -- interfering with SELECT statements.
     SET NOCOUNT ON;
+    
 
-    SELECT top 1 SI.id_sensor, SI.name "NAME", SR.current_value "CURRENT_VALUE", SR.date_record "DATE_RECORD"
-    FROM sensor_records SR
-    INNER JOIN sensor_info SI ON SR.id_sensor = SI.id_sensor        
-    where SI.id_sensor = @id_sensor
-    order by SR.date_record desc
+    SELECT TOP 1 DI.id_device, DI.name "NAME", DR.current_value "CURRENT_VALUE", 
+    DR.date_record "DATE_RECORD"
+    FROM devices_records DR
+    INNER JOIN devices_info DI ON DR.id_device = DI.id_device
+    WHERE DI.id_device = @id_device
+    ORDER BY DR.date_record DESC
+
            
 END
 
+GO
 
-SP_SelecLastRecordByID 2
+EXEC SP_SelectALL_records
+EXEC SP_SelecLastRecordByID 5
 
+GO
 
 --PASO 6
 CREATE TABLE [dbo].[toma_decisiones](
