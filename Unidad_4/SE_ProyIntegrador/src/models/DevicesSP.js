@@ -4,7 +4,7 @@ const sql = require('mssql')
 const Sp_SelectALL_records  = async function(){    
     const conexion = await getConnection()
     const result = await conexion
-    .request().execute('Sp_SelectALL_records')
+    .request().execute('SP_SelectALL_records')
     //console.log(result.recordset)
     return result.recordset
 }

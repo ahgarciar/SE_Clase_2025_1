@@ -2,9 +2,9 @@ const sql = require('mssql')
 
 const config = {
     user:'sa',
-    password:'Garuco19',
+    password:'Prueba123',
     server:'localhost',
-    database:'BD_PROY_INTEGRADO_SE',
+    database:'BD_UNIDAD_4_SE_2025_1',
     options: {
         encrypt: true, // for azure
         trustServerCertificate: true // change to true for local dev / self-signed certs

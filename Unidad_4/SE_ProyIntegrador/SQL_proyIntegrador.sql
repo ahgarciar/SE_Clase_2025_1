@@ -131,8 +131,8 @@ EXEC SP_SelecLastRecordByID 5
 
 GO
 
---PASO 6
-CREATE TABLE [dbo].[toma_decisiones](
+--PASO 6 ****** 
+CREATE TABLE [dbo].[toma_decisiones]( --"valores_optimizados"
     [id_decision] [numeric](18, 0) IDENTITY(1,1) NOT NULL,
     [velocidad] [numeric](18, 0) NOT NULL,
     [distancia] [numeric](18, 0) NOT NULL,

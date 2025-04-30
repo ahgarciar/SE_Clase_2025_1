@@ -1,10 +1,10 @@
-const bd = require("../models/SensorSP")
+const bd = require("../models/DevicesSP")
 
 //SELECT * FROM ... ALL
 const getAll_records = async function(){    
-    //return " GARUCO IS REAL!!"
+    //return " HOLA!!"    
     const resp = await bd.Sp_SelectALL_records()
-    //console.log("resp from service->", resp)
+    console.log("resp from service->", resp)
     return resp
 }
 

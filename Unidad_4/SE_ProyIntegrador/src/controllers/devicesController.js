@@ -1,5 +1,5 @@
 
-const services = require('../services/sensorService')
+const services = require('../services/devicesService')
 
 //SELECT * FROM ... ALL
 const getAll_records = async function(req,res){
