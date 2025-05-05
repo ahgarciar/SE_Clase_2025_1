@@ -9,12 +9,13 @@ const Sp_SelectALL_records  = async function(){
     return result.recordset
 }
 
-const Sp_SelecLastRecordByID = async function(id_sensor){    
+const SP_SelecLastRecordByID = async function(ID){    
     const conexion = await getConnection()
     const result = await conexion
     .request()                      
-         .input("id_sensor", sql.Int, id_sensor )        
-         .execute('Sp_SelecLastRecordByID')
+         .input("id_device", sql.Int, ID )        
+         .execute('SP_SelecLastRecordByID')
+    console.log(result.recordset)
     return result.recordset[0]
 }
 
@@ -58,7 +59,7 @@ const Sp_Insert_Decision = async function(velocidad, distancia, decision){
 //EXPORTA LAS FUNCIONES PARA HACER POSIBLE SU POSTERIOR IMPORTANCION Y USO EN OTROS MODULOS
 module.exports = {
     Sp_SelectALL_records, 
-    Sp_SelecLastRecordByID,
+    SP_SelecLastRecordByID,
     Sp_SelecLastDecision,  
 
     Sp_Insert_SensorRecords,

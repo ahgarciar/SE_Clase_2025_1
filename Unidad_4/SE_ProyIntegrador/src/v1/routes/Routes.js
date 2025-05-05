@@ -7,11 +7,12 @@ const router = express.Router()
 
 // /api/v1-actuators/actuators
 router
-   // http://localhost:3000/api/v1/
+   // http://localhost:3000/api/v1/  ->> volley
+                                  // --> http
   .get("/", controller.getAll_records) 
   
-  // http://localhost:3000/api/v1/registros/X
-  .get("/registros/:idSensor", controller.getLast_Record)
+  // http://localhost:3000/api/v1/optimizar/X
+  .get("/optimizar/:idDevice", controller.getLast_Record)
 
   // http://localhost:3000/api/v1-actuators/actuators/2
   .get("/decision", controller.getLastDecision) 

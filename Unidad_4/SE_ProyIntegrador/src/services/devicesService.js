@@ -9,8 +9,8 @@ const getAll_records = async function(){
 }
 
 //SELECT * FROM .. WHERE ... ID
-const getLast_Record = async function(id){
-    const resp = await bd.Sp_SelecLastRecordByID(id)
+const getLastDevice_Record = async function(id){
+    const resp = await bd.SP_SelecLastRecordByID(id)
     return resp
 }
 
@@ -41,7 +41,7 @@ const insertDecision = async function(JsonObj){
 
 module.exports = {
     getAll_records,
-    getLast_Record,
+    getLastDevice_Record,
     getLastDecision,
 
     insertRecord,

@@ -10,14 +10,14 @@ const getAll_records = async function(req,res){
 
 //SELECT * FROM .. WHERE ... ID
 const getLast_Record = async function(req,res){ 
-    const {params:{idSensor}} = req 
-    //console.log(typeof idSensor)
-    if (!isNaN(idSensor)){
-        const resultado = await services.getLast_Record(idSensor)
+    const {params:{idDevice}} = req 
+    console.log(typeof idDevice)
+    if (!isNaN(idDevice)){
+        const resultado = await services.getLastDevice_Record(idDevice)
         res.status(200).send(resultado)
     }
     else{
-        res.status(501).send("Error")
+       res.status(501).send("Error")
     }
 }
 
