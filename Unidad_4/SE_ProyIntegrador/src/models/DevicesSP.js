@@ -26,16 +26,16 @@ const Sp_SelecLastDecision = async function(){
     return result.recordset[0]
 }
 
-const Sp_Insert_SensorRecords = async function(id_sensor, current_value){
+const SP_Insert_DevicesRecords = async function(id_device, current_value){
 
-    console.log("id_sensor: ", id_sensor, " current_value:", current_value)
+    console.log("id_device: ", id_device, " current_value:", current_value)
 
     const conexion = await getConnection()
     const result = await conexion
     .request()                
-         .input("id_sensor", sql.Int, id_sensor )        
+         .input("id_device", sql.Int, id_device )        
          .input("current_value", sql.Int, current_value  )        
-         .execute('Sp_Insert_SensorRecords')
+         .execute('SP_Insert_DevicesRecords')
     //console.log(result)
     return "{\"Resultado\": \"Insercion Correcta\"}"
 }
@@ -62,7 +62,7 @@ module.exports = {
     SP_SelecLastRecordByID,
     Sp_SelecLastDecision,  
 
-    Sp_Insert_SensorRecords,
+    SP_Insert_DevicesRecords,
     Sp_Insert_Decision,  
 
 }

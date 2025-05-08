@@ -23,9 +23,32 @@ const getLast_Record = async function(req,res){
 
 //SELECT * FROM .. INNER JOIN WHERE ... ID
 const getLastDecision = async function(req,res){    
-    const resultado = await services.getLastDecision()
+    //const resultado = await services.getLastDecision()
+    const resultado = "{\"Msj\": Decision Tomada}"
+    //const resultado = "Decision Tomada"
+
     res.status(200).send(resultado)
 }
+
+//SELECT * FROM .. INNER JOIN WHERE ... ID
+const getLastDecisionEjemplo = async function(req,res){    
+    //const resultado = await services.getLastDecision()
+    const resultado = "{\"Msj\": Decision Tomada con EJEMPLO 2}"
+    //const resultado = "Decision Tomada"
+
+    res.status(200).send(resultado)
+}
+
+//SELECT * FROM .. INNER JOIN WHERE ... ID
+const getLastDecisionMultiple = async function(req,res){    
+    //const resultado = await services.getLastDecision()
+    const resultado = "{\"Msj\": Decision Tomada con EJEMPLO MULTIPLE}"
+    //const resultado = "Decision Tomada"
+
+    res.status(200).send(resultado)
+}
+
+
 
 //INSERT RECORD
 //Ejemplo de body ->
@@ -41,7 +64,8 @@ const insertRecord = async function(req,res){
     console.log(body)
     // COMPRUEBA QUE TODOS LOS CAMPOS TENGA VALORES
     if (
-        body.Id_sensor==""         
+        body.Id_device=="" ||
+        body.Current_value==""
     ) {        
         res.status(400)
            .send({
@@ -51,12 +75,12 @@ const insertRecord = async function(req,res){
         return 
     }
     // *** OBJETO QUE CONTIENE LA INFORMACION DEL NUEVO SENSOR ***
-    const newSensor = {
-        Id_sensor: body.Id_sensor,
+    const newDevice = {
+        Id_device: body.Id_device,
         Current_value: body.Current_value,        
     };
 
-    const resultado = await services.insertRecord(newSensor)
+    const resultado = await services.insertRecord(newDevice)
     
     res
     .setHeader('content-type', "application/json") //'text/plain')
@@ -117,5 +141,9 @@ module.exports = {
 
     insertRecord,
     insertDecision,
+
+    getLastDecisionEjemplo,
+    getLastDecisionMultiple
+
 }
 

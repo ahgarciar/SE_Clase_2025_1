@@ -9,7 +9,7 @@ def getAll_records():
     url = url_base + "/"
     response = requests.get(url, verify=False)
     result = response.json()
-    print(result) #diccionario ...
+    print(result) #lista de diccionarios ...
     print(response.status_code)
 
     print("Table Info:")
@@ -21,7 +21,7 @@ def getAll_records():
 def getLast_RecordById(id):
     # Get
     print("\nGET LAST RECORD: ")
-    url = url_base + "/registros/" +str(id)
+    url = url_base + "/optimizar/" +str(id)
     response = requests.get(url, verify=False)
     result = response.json()
     print(result)  # diccionario ...
@@ -47,21 +47,21 @@ def getLastDecision():
 
     return result["decision"]
 ###############################################################################################################################
-def insertRecord(id_sensor, current_value):
+def insertRecord(id_device, current_value):
     #Post
     #print("\n\nINSERT RECORD")
     import json
-    Id_sensor = id_sensor
+    Id_device = id_device
     Current_value = current_value
     url = url_base + "/registros"
     headers =  {"Content-Type":"application/json"}
     body = {
-        "Id_sensor": Id_sensor,
+        "Id_device": Id_device,
         "Current_value": Current_value
     }
     response = requests.post(url, data=json.dumps(body), headers=headers, verify= False)
-    #print(response.json())
-    #print(response.status_code)
+    print(response.json())
+    print(response.status_code)
 ###############################################################################################################################
 def insertDecision(velocidad, distancia, decision):
     #Post
@@ -83,10 +83,10 @@ def insertDecision(velocidad, distancia, decision):
 ###############################################################################################################################
 
 #getAll_records()
-#getLast_RecordById(6)
+getLast_RecordById(4)
 #getLastDecision()
 
-#insertRecord(6, 120)
+#insertRecord(4, 120)
 #insertDecision(100, 900, 8)
 
 ###############################################################################################################################

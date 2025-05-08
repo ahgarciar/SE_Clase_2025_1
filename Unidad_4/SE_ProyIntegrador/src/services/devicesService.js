@@ -22,10 +22,10 @@ const getLastDecision = async function(){
 
 //INSERT
 const insertRecord = async function(JsonObj){
-    id = JsonObj.Id_sensor
+    id = JsonObj.Id_device
     current_value  = JsonObj.Current_value
     //console.log("Res: ", JsonObj)
-    const resp = await bd.Sp_Insert_SensorRecords(id, current_value)
+    const resp = await bd.SP_Insert_DevicesRecords(id, current_value)
     return resp
 }
 
